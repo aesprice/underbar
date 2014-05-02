@@ -115,6 +115,28 @@ var _ = {};
 
   // Produce a duplicate-free version of the array.
   _.uniq = function(array) {
+    var uniqueArray = [];
+
+    var repeats = function(compareVal, compareArray){ //Function to check if something already exists in our success list
+      var repeat = false;
+
+      _.each(compareArray, function(item){ 
+        if(item === compareVal){ //If any values in our success list match what we're looking for, set repeat to true and stop searching
+          repeat = true;
+          return;
+        }
+      });
+
+      return repeat;
+    };
+
+    _.each(array, function(item){
+      if(!repeats(item, uniqueArray)){ //If we find no repeats, we can add this value to our success list
+        uniqueArray.push(item);
+      }
+    });
+
+    return uniqueArray;
   };
 
 
