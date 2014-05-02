@@ -90,6 +90,15 @@ var _ = {};
 
   // Return all elements of an array that pass a truth test.
   _.filter = function(collection, test) {
+    var positives = [];
+
+    _.each(collection, function(item){
+      if(test(item)){ //Check passed-in comparison on each iteration through the array, and add to our list if true
+        positives.push(item);
+      }
+    });
+
+    return positives;
   };
 
   // Return all elements of an array that don't pass a truth test.
