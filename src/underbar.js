@@ -175,6 +175,18 @@ var _ = {};
   // Calls the method named by methodName on each value in the list.
   // Note: you will nead to learn a bit about .apply to complete this.
   _.invoke = function(collection, functionOrKey, args) {
+    var results = [];
+
+    _.each(collection, function(item){
+      if(typeof(functionOrKey) === "function"){
+        item = functionOrKey.apply(item, args); //If a method was passed in, the apply that method to the items in the collection
+      }else{
+        item = item[functionOrKey].apply(item, args); //Otherwise, try to find the method in the item class and apply it
+      }
+      results.push(item);
+    });
+
+    return results;
   };
 
   // Reduces an array or object to a single value by repetitively calling
