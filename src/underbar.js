@@ -105,6 +105,12 @@ var _ = {};
   _.reject = function(collection, test) {
     // TIP: see if you can re-use _.filter() here, without simply
     // copying code in and modifying it
+
+    var failTest = function(num){
+      return !test(num); //Reverse the boolean from the test condition; we want a failure to yield a 'positive' result
+    };
+
+    return _.filter(collection, failTest); //Now filter for failures instead of successes
   };
 
   // Produce a duplicate-free version of the array.
