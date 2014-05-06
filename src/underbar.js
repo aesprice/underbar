@@ -203,6 +203,17 @@ var _ = {};
   //     return total + number;
   //   }, 0); // should be 6
   _.reduce = function(collection, iterator, accumulator) {
+    var total = accumulator;
+
+    _.each(collection, function(item){
+      if (total === undefined){
+        total = collection[0];
+      }else{
+        total = iterator(total, item);
+      }
+    })
+
+    return total;
   };
 
   // Determine if the array or object contains a given value (using `===`).
