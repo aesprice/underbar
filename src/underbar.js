@@ -232,13 +232,14 @@ var _ = {};
   // Determine whether all of the elements match a truth test.
   _.every = function(collection, iterator) {
     // TIP: Try re-using reduce() here.
+    if(!iterator){
+      iterator = _.identity; //If iterator function doesn't exist, just check the value of the item
+    }
+
     return _.reduce(collection, function(verify, item){
-      if(!iterator){
-        return item; //If iterator function doesn't exist, just return the value of the item
-      }
 
       if(verify && iterator(item)){
-        return true //Only return true if this item AND all previous items have passed
+        return true; //Only return true if this item AND all previous items have passed
       }else{
         return false;
       }
@@ -249,6 +250,19 @@ var _ = {};
   // provided, provide a default one
   _.some = function(collection, iterator) {
     // TIP: There's a very clever way to re-use every() here.
+    if(!iterator){
+      iterator = _.identity; //If iterator function doesn't exist, just check the value of the item
+    }
+
+    var reverseTest = function(item){
+      return !iterator(item); //Reverse the boolean from the test condition; we want a failure to yield a 'positive' result
+    };
+
+    if(_.every(collection, reverseTest)){
+      return false; //If all items fail, then and only then is _.some a failure
+    }else{
+      return true;
+    }
   };
 
 
