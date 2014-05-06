@@ -203,6 +203,17 @@ var _ = {};
   //     return total + number;
   //   }, 0); // should be 6
   _.reduce = function(collection, iterator, accumulator) {
+    var total = accumulator; //If initial value exists, set it
+
+    _.each(collection, function(item){
+      if (total === undefined){ //Don't perform iterator if initial value wasn't set; instead set to first value of array
+        total = collection[0];
+      }else{
+        total = iterator(total, item); //total will now equal the desired calculation on the previous total and the current array item
+      }
+    })
+
+    return total;
   };
 
   // Determine if the array or object contains a given value (using `===`).
