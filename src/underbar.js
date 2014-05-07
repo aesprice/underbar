@@ -347,6 +347,18 @@ var _ = {};
   // already computed the result for the given argument and return that value
   // instead if possible.
   _.memoize = function(func) {
+    var results = {}; // Keep a list of all previous results
+
+    return function(){
+      var arg = arguments[0]; // Short name for first argument of 'func'  :)
+
+      if(results[arg] != undefined){
+        return results[arg]; // If previous result for this argument exists, just read that from our results list
+      }else{
+        results[arg] = func.apply(this, arguments); // If previous result doesn't exist, calculate the result and remember it for next time
+        return results[arg];
+      }
+    }
   };
 
   // Delays a function for the given number of milliseconds, and then calls
