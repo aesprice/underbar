@@ -385,6 +385,24 @@ var _ = {};
   // input array. For a tip on how to make a copy of an array, see:
   // http://mdn.io/Array.prototype.slice
   _.shuffle = function(array) {
+    var shuffledArray = array.slice(0, array.length);
+
+    var shufflePass = function(array){
+      // Switch every item in the array with a random other item
+      _.each(shuffledArray, function(item, key){
+        var newPlace = Math.floor(Math.random() * shuffledArray.length); // newPlace is index for random switching item (the current item's new home)
+        var tradeItem = shuffledArray[newPlace]; // tradeItem is the actual value that's going to move to the current index
+        shuffledArray[newPlace] = item;
+        shuffledArray[key] = tradeItem;
+      });
+    };
+
+    // Pass through the array a few times to make sure we get mixed up good and proper.
+    shufflePass(shuffledArray);
+    shufflePass(shuffledArray);
+    shufflePass(shuffledArray);
+
+    return shuffledArray;
   };
 
 
