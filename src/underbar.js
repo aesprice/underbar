@@ -287,7 +287,7 @@ var _ = {};
   _.extend = function(obj) {
     _.each(arguments, function(object){
       _.each(object, function(item, key){
-        obj[key] = item;
+        obj[key] = item; // Loop through every item in every object argument we find, then write each item into the original object
       });
     });
 
@@ -297,6 +297,15 @@ var _ = {};
   // Like extend, but doesn't ever overwrite a key that already
   // exists in obj
   _.defaults = function(obj) {
+    _.each(arguments, function(object){
+      _.each(object, function(item, key){
+        if(obj[key] === undefined){  // Only write in the new item if it doesn't already exist in the original object
+          obj[key] = item;
+        }
+      });
+    });
+
+    return obj;
   };
 
 
